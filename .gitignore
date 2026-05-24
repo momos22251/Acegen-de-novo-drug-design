@@ -1,0 +1,73 @@
+# Nextflow execution and cache directories
+work/
+.nextflow/
+.nextflow.log*
+nextflow_run.log
+
+# Nextflow reports
+report.html*
+timeline.html*
+trace.txt*
+flowchart.html*
+flowchart.png*
+dag.html*
+dag.png*
+
+# Python build and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Generated models and large datasets
+data/model.pkl
+*.pkl
+*.joblib
+*.pb
+*.h5
+*.pth
+*.pt
+
+# Optimization output results
+results/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# CLI / Agent environment directories
+.antigravitycli/

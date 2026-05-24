@@ -1,0 +1,38 @@
+{
+    "task": "SMINA",
+    "output_dir": ".",
+    "load_from_previous": false,
+    "logging": false,
+    "monitor_app": false,
+    "termination_exit": false,
+    "scoring_functions": [
+        {
+            "name": "SminaDock",
+            "run": true,
+            "parameters": {
+                "prefix": "smina",
+                "receptor": "../data/prepared_protein.pdb",
+                "ref_ligand": "../data/ligand.pdb",
+                "cpus": 16,
+                "ligand_preparation": "GypsumDL",
+                "prep_timeout": 30.0,
+                "dock_timeout": 120.0
+            }
+        }
+    ],
+    "scoring": {
+        "metrics": [
+            {
+                "name": "smina_docking_score",
+                "filter": false,
+                "weight": 1.0,
+                "modifier": "raw",
+                "parameters": {}
+            }
+        ],
+        "method": "single"
+    },
+    "diversity_filter": {
+        "run": false
+    }
+}

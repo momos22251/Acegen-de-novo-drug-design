@@ -1,0 +1,36 @@
+{
+  "task": "RFC",
+  "output_dir": ".",
+  "load_from_previous": false,
+  "logging": false,
+  "monitor_app": false,
+  "termination_exit": false,
+  "scoring_functions": [
+    {
+      "name": "SKLearnClassifier",
+      "run": true,
+      "parameters": {
+        "prefix": "RFC",
+        "model_path": "../data/model.pkl",
+        "fp": "ECFP4",
+        "nBits": 1024,
+        "n_jobs": 1
+      }
+    }
+  ],
+  "scoring": {
+    "metrics": [
+      {
+        "name": "RFC_pred_proba",
+        "filter": false,
+        "weight": 1.0,
+        "modifier": "raw",
+        "parameters": {}
+      }
+    ],
+    "method": "single"
+  },
+  "diversity_filter": {
+    "run": false
+  }
+}
