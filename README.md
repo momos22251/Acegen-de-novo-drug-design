@@ -32,12 +32,6 @@ Ensure [Nextflow](https://www.nextflow.io/) (version `22.10.0` or higher) is ins
 nextflow run main.nf
 ```
 
-### Background Execution
-To run in the background (detached):
-```bash
-setsid nextflow run main.nf > nextflow_run.log 2>&1
-```
-
 ---
 
 ## Project Structure
