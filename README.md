@@ -1,46 +1,62 @@
 # Acegen ML - Nextflow Pipeline
 
-This directory contains a standalone Nextflow (DSL2) pipeline for target-conditioned de-novo drug design. It orchestrates the process of training a classifier, generating molecules via reinforcement learning optimization (using REINVENT/ACEGEN), and plotting results.
+A standalone Nextflow (DSL2) pipeline for target-conditioned de-novo drug design. It orchestrates training a classifier, generating molecules via reinforcement learning (using REINVENT/ACEGEN), and plotting results.
 
-## Prerequisites
+---
 
-Before running the pipeline, ensure you have the following installed and configured:
+## Environment Setup
 
-1. **Nextflow**: Version `22.10.0` or higher.
-2. **Conda**: A Conda environment named `acegen` containing the necessary dependencies (`rdkit`, `torchrl`, `scikit-learn`, `molscore`, etc.). The default environment location is assumed to be `/home/mohamed/miniconda3/envs/acegen` (as configured in `nextflow.config`).
+Follow these steps to set up your environment:
 
-## Project Structure
+1. **Install Conda**: Ensure Conda is installed on your system. If not, follow the installation instructions on [Miniconda](https://docs.anaconda.com/miniconda/install/).
+2. **Create the Environment**: Create the `acegen` environment using the provided `environment.yaml` file:
+   ```bash
+   conda env create -f environment.yaml
+   ```
+3. **Activate the Environment**:
+   ```bash
+   conda activate acegen
+   ```
+4. **Install ACEGEN**: Install ACEGEN from the official repository without dependencies:
+   ```bash
+   pip install git+https://github.com/Acellera/acegen-open.git --no-deps
+   ```
 
-*   `main.nf`: The main Nextflow workflow orchestrator.
-*   `nextflow.config`: Nextflow configuration specifying the environment, error strategy, and default input paths.
-*   `bin/`: Contains executable helper scripts (automatically added to the `$PATH` by Nextflow):
-    *   `train_classifier.py`: Extracts molecular ECFP4 fingerprints and trains a Random Forest Classifier.
-    *   `analyze_results.py`: Computes average reinforcement learning score progress, plots performance, and generates 2D drawings of top active molecules.
-*   `configs/`: Configuration files for reinforcement learning optimization (including `RFC_config_denovo.yaml` and `RFC.json`).
-*   `data/`: Directory containing training datasets, protein targets, and ligands.
-*   `scripts/`: Contains the reinforcement learning script (`reinvent.py`).
+---
 
 ## Running the Pipeline
 
-To run the pipeline from this directory, execute:
+Ensure [Nextflow](https://www.nextflow.io/) (version `22.10.0` or higher) is installed, then run:
 
 ```bash
 nextflow run main.nf
 ```
 
-### Detached Background Execution
-If running on a remote server or in the background, you can use `setsid` or redirect standard descriptors to prevent terminal signals from suspending the process:
-
+### Background Execution
+To run in the background (detached):
 ```bash
 setsid nextflow run main.nf > nextflow_run.log 2>&1
 ```
 
+---
+
+## Project Structure
+
+*   `main.nf`: Nextflow workflow orchestrator.
+*   `nextflow.config`: Pipeline configurations (environment, error handling, inputs).
+*   `bin/`: Executable helper scripts (Random Forest training, result analysis/plotting).
+*   `configs/`: Configuration files for reinforcement learning optimization.
+*   `data/`: Training datasets, target details, and intermediate classifier model.
+*   `scripts/`: Reinforcement learning script (`reinvent.py`).
+
+---
+
 ## Outputs
 
-When the pipeline completes successfully, the following outputs will be created:
+Upon successful completion, the pipeline generates:
 
-*   `data/model.pkl`: The trained Random Forest Classifier model.
+*   `data/model.pkl`: The trained classifier.
 *   `results/`:
-    *   `RFC_reinvent_<timestamp>/`: The generated scores CSV, tensorboard records, and model checkpoints from reinforcement learning.
-    *   `rfc_average_score_steps.png`: Line plot tracking average score progress over RL training steps.
-    *   `rfc_top_molecules.png`: Grid image showing the 2D structures of the top 3 generated active molecules.
+    *   `RFC_reinvent_<timestamp>/`: RL logs, TensorBoard events, and model checkpoints.
+    *   `rfc_average_score_steps.png`: Average score progress plot.
+    *   `rfc_top_molecules.png`: 2D drawings of top-scoring active molecules.
