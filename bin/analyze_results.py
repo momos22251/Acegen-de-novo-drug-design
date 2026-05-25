@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Analyze Acegen optimization results."""
 
 import argparse

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Train a RandomForest classifier on SMILES data."""
 
 import argparse
@@ -38,7 +39,13 @@ def main():
     data['activity'] = data['pchembl_value_Mean'].apply(lambda x: 1 if x >= activity_threshold else 0)
 
     print("Generating ECFP4 fingerprints...")
-    fingerprints = pd.DataFrame({smile: get_fingerprint(smile) for smile in data["SMILES"]}).T.reset_index().drop("index", axis=1)
+    fingerprint_list = []
+    for smile in data["SMILES"]:
+        fp = get_fingerprint(smile)
+        if fp is None:
+            fp = np.zeros((1024,), dtype=int)
+        fingerprint_list.append(fp)
+    fingerprints = pd.DataFrame(fingerprint_list)
     df = pd.concat([data, fingerprints], axis=1)
 
     print("Splitting dataset and training RandomForest classifier...")
