@@ -12,6 +12,7 @@ flowchart.html*
 flowchart.png*
 dag.html*
 dag.png*
+walkthrough.md
 
 # Python build and cache
 __pycache__/
